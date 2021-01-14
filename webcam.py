@@ -7,6 +7,7 @@ class Webcam(object):
         #print ("WebCamEngine init")
         self.dirname = "" #for nothing, just to make 2 inputs the same
         self.cap = None
+        self.valid = False
     
     def start(self):
         print("[INFO] Start webcam")

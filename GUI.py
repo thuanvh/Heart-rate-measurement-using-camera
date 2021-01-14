@@ -206,7 +206,10 @@ class GUI(QMainWindow, QThread):
             sys.exit()
     
     def openFileDialog(self):
-        self.dirname = QFileDialog.getOpenFileName(self, 'OpenFile',r"C:\Users\uidh2238\Desktop\test videos")
+        filename = QFileDialog.getOpenFileName(self, 'OpenFile',r"C:\Users\uidh2238\Desktop\test videos")
+        self.dirname = filename[0]
+        print(self.dirname)
+        print(self.dirname[0])
         #self.statusBar.showMessage("File name: " + self.dirname,5000)
     
     def reset(self):

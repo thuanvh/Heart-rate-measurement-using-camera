@@ -13,7 +13,7 @@ class Video(object):
         if self.dirname == "":
             print("invalid filename!")
             return
-            
+        print(self.dirname)
         self.cap = cv2.VideoCapture(self.dirname)
         fps = self.cap.get(cv2.CAP_PROP_FPS)
         self.frame_count = self.cap.get(cv2.CAP_PROP_FRAME_COUNT)
