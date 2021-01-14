@@ -300,4 +300,5 @@ if __name__ == '__main__':
     app = MainProcess()
     app.open_video('/home/thuan/Downloads/webcams2.webm')
     app.run()
-    
+    print(self.hrlist)
+    print(np.mean(self.hrlist))
