@@ -2,23 +2,23 @@ import cv2
 import numpy as np
 # from PyQt4.QtCore import *
 # from PyQt4.QtGui import *
-from PyQt5 import QtCore
+#from PyQt5 import QtCore
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+# from PyQt5.QtCore import *
+# from PyQt5.QtGui import *
+# from PyQt5.QtWidgets import *
 #from PyQt4 import QtTest
 
-import pyqtgraph as pg
+#import pyqtgraph as pg
 import sys
 import time
 from process import Process
 from webcam import Webcam
 from video import Video
-from interface import waitKey, plotXY
+#from interface import waitKey, plotXY
 
-class Communicate(QObject):
-    closeApp = pyqtSignal()
+# class Communicate(QObject):
+#     closeApp = pyqtSignal()
     
     
 class MainProcess:
@@ -230,7 +230,7 @@ class MainProcess:
         self.process.frame_in = frame
         self.process.run()
         
-        cv2.imshow("Processed", frame)
+        #cv2.imshow("Processed", frame)
         
         self.frame = self.process.frame_out #get the frame to show in GUI
         self.f_fr = self.process.frame_ROI #get the face to show in GUI
@@ -240,15 +240,15 @@ class MainProcess:
         self.frame = cv2.cvtColor(self.frame, cv2.COLOR_RGB2BGR)
         cv2.putText(self.frame, "FPS "+str(float("{:.2f}".format(self.process.fps))),
                        (20,460), cv2.FONT_HERSHEY_PLAIN, 1.5, (0, 255, 255),2)
-        img = QImage(self.frame, self.frame.shape[1], self.frame.shape[0], 
-                        self.frame.strides[0], QImage.Format_RGB888)
+        # img = QImage(self.frame, self.frame.shape[1], self.frame.shape[0], 
+        #                 self.frame.strides[0], QImage.Format_RGB888)
         #self.lblDisplay.setPixmap(QPixmap.fromImage(img))
         
         self.f_fr = cv2.cvtColor(self.f_fr, cv2.COLOR_RGB2BGR)
         #self.lblROI.setGeometry(660,10,self.f_fr.shape[1],self.f_fr.shape[0])
         self.f_fr = np.transpose(self.f_fr,(0,1,2)).copy()
-        f_img = QImage(self.f_fr, self.f_fr.shape[1], self.f_fr.shape[0], 
-                       self.f_fr.strides[0], QImage.Format_RGB888)
+        # f_img = QImage(self.f_fr, self.f_fr.shape[1], self.f_fr.shape[0], 
+        #                self.f_fr.strides[0], QImage.Format_RGB888)
         #self.lblROI.setPixmap(QPixmap.fromImage(f_img))
         
         #self.lblHR.setText("Freq: " + str(float("{:.2f}".format(self.bpm))))
@@ -283,11 +283,14 @@ class MainProcess:
             #self.lblHR2.clear()
             while self.status == True:
                 self.main_loop()
+            print(self.hrlist)
+            print(np.mean(self.hrlist))
         elif self.status == True:
             self.status = False
             input.stop()
             #self.btnStart.setText("Start")
             #self.cbbInput.setEnabled(True)
+
 
 
 if __name__ == '__main__':
@@ -297,8 +300,8 @@ if __name__ == '__main__':
     #    ex.main_loop()
 
     #sys.exit(app.exec_())
+    video_file = sys.argv[1]
+    print("Processing " + video_file)
     app = MainProcess()
-    app.open_video('/home/thuan/Downloads/webcams2.webm')
+    app.open_video(video_file)
     app.run()
-    print(self.hrlist)
-    print(np.mean(self.hrlist))
