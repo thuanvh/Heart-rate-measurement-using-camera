@@ -3,12 +3,15 @@ import numpy as np
 import dlib
 from imutils import face_utils
 import imutils
-
+import pathlib
+import os
 
 class FaceDetection(object):
     def __init__(self):
         self.detector = dlib.get_frontal_face_detector()
-        self.predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+        datapath = pathlib.Path(__file__).parent.absolute() 
+        datapath = os.path.join(datapath, "shape_predictor_68_face_landmarks.dat")
+        self.predictor = dlib.shape_predictor(datapath)
         self.fa = face_utils.FaceAligner(self.predictor, desiredFaceWidth=256)
 
     def face_detect(self, frame):

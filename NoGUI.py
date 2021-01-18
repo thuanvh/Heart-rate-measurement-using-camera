@@ -12,14 +12,15 @@ import numpy as np
 #import pyqtgraph as pg
 import sys
 import time
-from process import Process
-from webcam import Webcam
-from video import Video
+from .process import Process
+from .webcam import Webcam
+from .video import Video
 #from interface import waitKey, plotXY
 
 # class Communicate(QObject):
 #     closeApp = pyqtSignal()
-    
+#import webcam
+#import video
     
 class MainProcess:
     def __init__(self):
@@ -252,12 +253,12 @@ class MainProcess:
         #self.lblROI.setPixmap(QPixmap.fromImage(f_img))
         
         #self.lblHR.setText("Freq: " + str(float("{:.2f}".format(self.bpm))))
-        print("Freq: " + str(self.bpm))
+        #print("Freq: " + str(self.bpm))
         
         if self.process.bpms.__len__() >50:
             if(max(self.process.bpms-np.mean(self.process.bpms))<5): #show HR if it is stable -the change is not over 5 bpm- for 3s
                 hravg = np.mean(self.process.bpms)
-                print("Heart rate: " + str(float("{:.2f}".format(hravg))) + " bpm")
+                #print("Heart rate: " + str(float("{:.2f}".format(hravg))) + " bpm")
                 self.hrlist.append(hravg)
 
         # #self.lbl_Age.setText("Age: "+str(self.process.age))
@@ -285,6 +286,8 @@ class MainProcess:
                 self.main_loop()
             print(self.hrlist)
             print(np.mean(self.hrlist))
+            hrfinal = np.mean(self.hrlist)
+            self.result = { "heart_rate" : hrfinal }
         elif self.status == True:
             self.status = False
             input.stop()
@@ -292,6 +295,12 @@ class MainProcess:
             #self.cbbInput.setEnabled(True)
 
 
+def run_video(video_file):
+    print("Processing " + video_file)
+    app = MainProcess()
+    app.open_video(video_file)
+    app.run()
+    return app.result
 
 if __name__ == '__main__':
     #app = QApplication(sys.argv)
