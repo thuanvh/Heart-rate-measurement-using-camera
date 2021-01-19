@@ -3,5 +3,3 @@ dlib
 imutils
 numpy
 opencv-python
-PyQt5
-pyqtgraph
